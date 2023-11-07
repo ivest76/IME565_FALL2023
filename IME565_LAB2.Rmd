@@ -1,0 +1,160 @@
+---
+title: "lab2 IME 565"
+output: html_document
+date: "2023-09-29"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+```
+
+```{r}
+superstore <- read.csv("~/Downloads/Superstore.csv")
+happy <- read.csv("~/Downloads/world-happiness-dataset.csv")
+```
+
+```{r}
+hist(superstore$Profit)
+```
+
+
+```{r}
+#making bar plot with colors
+p<-ggplot(superstore, aes(x=Category, y=Sales, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal()
+p
+
+```
+
+```{r}
+p<-ggplot(superstore, aes(x=reorder(Sub.Category, -Sales), y=Sales, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+p
+```
+
+```{r}
+south <- subset(superstore, Region=="South")
+west <- subset(superstore, Region=="West")
+central <- subset(superstore, Region=="Central")
+east <- subset(superstore, Region=="East")
+```
+
+```{r}
+p<-ggplot(south, aes(x=reorder(Sub.Category, desc(Sales)), y=Sales, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Sales by Sub Category in Southern Region") + xlab("Sub Categories")
+p + scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+
+```{r}
+p<-ggplot(south, aes(x=reorder(Sub.Category, -Profit), y=Profit, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Profit by Sub Category in Southern Region") + xlab("Sub Categories")
+p + scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+
+```{r}
+p<-ggplot(west, aes(x=reorder(Sub.Category, -Sales), y=Sales, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Sales by Sub Category in Western Region") + xlab("Sub Categories")
+p+ scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+
+```{r}
+p<-ggplot(west, aes(x=reorder(Sub.Category, -Profit), y=Profit, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Profit by Sub Category in Western Region") + xlab("Sub Categories")
+p+ scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+
+```{r}
+p<-ggplot(central, aes(x=reorder(Sub.Category, -Sales), y=Sales, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Sales by Sub Category in Central Region") + xlab("Sub Categories")
+p+ scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+
+```{r}
+p<-ggplot(central, aes(x=reorder(Sub.Category, -Profit), y=Profit, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Profit by Sub Category in Central Region") + xlab("Sub Categories")
+p+ scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+
+
+```{r}
+p<-ggplot(east, aes(x=reorder(Sub.Category, -Sales), y=Sales, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Sales by Sub Category in Eastern Region") + xlab("Sub Categories")
+p+ scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+
+```{r}
+p<-ggplot(east, aes(x=reorder(Sub.Category, -Profit), y=Profit, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Sales by Sub Category in Eastern Region") + xlab("Sub Categories")
+p+ scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+
+```{r}
+p<-ggplot(superstore, aes(x=reorder(Sub.Category, desc(Sales)), y=Sales, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Sales by Sub Category in All Regions") + xlab("Sub Categories")
+p + scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+
+```{r}
+p<-ggplot(superstore, aes(x=reorder(Sub.Category, -Profit), y=Profit, fill=Category)) +
+  geom_bar(stat="identity")+theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Profit by Sub Category in All Regions") + xlab("Sub Categories")
+p + scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+
+
+```{r}
+ggplot(happy, aes(x=LifeLadder, y=Healthy.life.expectancy.at.birth, color =year)) +
+  geom_point() + ylab("Average Life Expectancy") +xlab("Life Ladder Score") 
+```
+
+
+```{r}
+ggplot(happy, aes(x=Perceptions.of.corruption, y=Healthy.life.expectancy.at.birth, color =year)) +
+  geom_point() + ylab("Average Life Expectancy") +xlab("Corruption")
+```
+
+```{r}
+happy2020 <- subset(happy, year == 2020)
+```
+
+```{r}
+ggplot(happy2020, aes(x=Perceptions.of.corruption, y=Healthy.life.expectancy.at.birth)) +
+  geom_point() + ylab("Average Life Expectancy") +xlab("Corruption")
+```
+
